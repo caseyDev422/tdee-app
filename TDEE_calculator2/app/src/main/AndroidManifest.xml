@@ -11,6 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".TdeeInformation"></activity>
         <activity android:name=".TdeeCalculator"></activity>
+        <activity android:name=".CalculatorResults"
+            android:parentActivityName=".TdeeCalculator"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
