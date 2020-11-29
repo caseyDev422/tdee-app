@@ -10,26 +10,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-/*
-Need to get values
-check if bodyfat filled out
-if filled out, need to input into muller equation and figure out lbm and fm, woman is 0 and man 1
-*****muller equation***** -> (13.587 * LBM) + (9.613 * FM) + (198 * Gender) - (3.351 * Age) + 674 = BMR
-
-not filled out, use revised harris-benedict formula
-*****harris-benedict***** -> 88.362 + (13.397 * bodyWeight) + (4.799 * height in cm) - (5.677 * age) = BMR
-
-after getting BMR, show BMR results
-to get BMR, multiply by activity lvl
-1.2 - Sedentary
-1.375 - Light Activity
-1.55 - Moderate Activity
-1.725 - Very Active
-1.9 - Extra Active
-*/
 
 
 public class TdeeCalculator extends AppCompatActivity {
@@ -57,7 +40,6 @@ public class TdeeCalculator extends AppCompatActivity {
                 } else {
                     mullerEquation();
                 }
-                openResults();
             }
         });
 
@@ -65,9 +47,11 @@ public class TdeeCalculator extends AppCompatActivity {
 
     public void mullerEquation() {
 
-        RadioButton female = findViewById(R.id.rdBtnFemale);
-        RadioButton male = findViewById(R.id.rdBtnMale);
+        RadioButton female = (RadioButton) findViewById(R.id.rdBtnFemale);
+        RadioButton male = (RadioButton) findViewById(R.id.rdBtnMale);
+        RadioButton radioButton = (RadioButton) findViewById(R.id.rdioCheck);
         EditText textAge = findViewById(R.id.txtAge);
+        TextView textView = findViewById(R.id.txtGender);
         EditText textWeight = findViewById(R.id.txtWeight);
         String weightLbs = textWeight.getText().toString();
         EditText textBf = findViewById(R.id.txtBodyFat);
@@ -75,24 +59,32 @@ public class TdeeCalculator extends AppCompatActivity {
         String stringBf = textBf.getText().toString();
         String stringAge = textAge.getText().toString();
 
-        age = Integer.parseInt(stringAge);
-        bf = Double.parseDouble(stringBf) / 100;
-        weightKgs = Math.round(Integer.parseInt(weightLbs) / 2.2);
-        double fm = weightKgs * bf; //fat mass
-        double lbm = weightKgs - fm; //lean body mass
+        if (weightLbs.matches("")) {
+            textWeight.setError("Please input your weight"); }
+        if (stringAge.matches("")) {
+            textAge.setError("Please input your age"); }
+        if (radioButton.isChecked()) {
+            radioButton.setError("Please select Male or Female.");
+        } else {
+            age = Integer.parseInt(stringAge);
+            bf = Double.parseDouble(stringBf) / 100;
+            weightKgs = Math.round(Integer.parseInt(weightLbs) / 2.2);
+            double fm = weightKgs * bf; //fat mass
+            double lbm = weightKgs - fm; //lean body mass
 
-        int gender = 0;
-        if (female.isChecked()) {
-            gender = 0;
-        } else if (male.isChecked()) {
-            gender = 1;
+            int gender = 0;
+            if (female.isChecked()) {
+                gender = 0;
+            } else if (male.isChecked()) {
+                gender = 1;
+            }
+            BMR = Math.round((13.587 * lbm) + (9.613 * fm) + (198 * gender) - (3.351 * age) + 674);
+
+            tdeeResults();
+            openResults();
         }
-        BMR = Math.round((13.587 * lbm) + (9.613 * fm) + (198 * gender) - (3.351 * age) + 674);
 
-        System.out.println("Muller Equation");
-        System.out.println("weight in kg: " + weightKgs + " fat mass: " + fm + " lbm: " + lbm);
-        System.out.println("BMR: " + BMR);
-        tdeeResults();
+
     }
 
     public void harrisBenedictEquation() {
@@ -100,6 +92,7 @@ public class TdeeCalculator extends AppCompatActivity {
         //bad practice DRY not implemented
         RadioButton female = findViewById(R.id.rdBtnFemale);
         RadioButton male = findViewById(R.id.rdBtnMale);
+        RadioButton radioButton = findViewById(R.id.rdioCheck);
         EditText textAge = findViewById(R.id.txtAge);
         EditText textWeight = findViewById(R.id.txtWeight);
         EditText textHeight = findViewById(R.id.txtHeight);
@@ -108,24 +101,30 @@ public class TdeeCalculator extends AppCompatActivity {
         String heightInches = textHeight.getText().toString();
         String weightLbs = textWeight.getText().toString();
 
-        age = Integer.parseInt(stringAge);
-        double heightCms = Double.parseDouble(heightInches) * 2.54; // 1 in = 2.54 cms
-        weightKgs = Math.round(Integer.parseInt(weightLbs) / 2.2);
+        if (weightLbs.matches("")) {
+            textWeight.setError("Please input weight");
+        } else if (stringAge.matches("")) {
+            textAge.setError("Please input age");
+        } else if (radioButton.isChecked()) {
+            radioButton.setError("Please choose Male or Female");
+        } else if (heightInches.matches("")) {
+            textHeight.setError("Please input height");
+        } else {
+            age = Integer.parseInt(stringAge);
+            double heightCms = Double.parseDouble(heightInches) * 2.54; // 1 in = 2.54 cms
+            weightKgs = Math.round(Integer.parseInt(weightLbs) / 2.2);
 
-        if (female.isChecked()) {
-            BMR = Math.round(447.593 + (9.247 * weightKgs) + (3.098 * heightCms) - (4.330 * age));
-            System.out.println("Female checked");
-        } else if (male.isChecked()) {
-            BMR = Math.round(88.362 + (13.397 * weightKgs) + (4.799 * heightCms) - (5.677 * age));
-            System.out.println("Male checked");
+            if (female.isChecked()) {
+                BMR = Math.round(447.593 + (9.247 * weightKgs) + (3.098 * heightCms) - (4.330 * age));
+                System.out.println("Female checked");
+            } else if (male.isChecked()) {
+                BMR = Math.round(88.362 + (13.397 * weightKgs) + (4.799 * heightCms) - (5.677 * age));
+                System.out.println("Male checked");
+            }
+
+            tdeeResults();
+            openResults();
         }
-
-        System.out.println("Harris-Benedict Equation");
-        System.out.println("Kg weight: " + weightKgs +
-                " Cm height: " + heightCms +
-                " Age: " + age +
-                " BMR: " + BMR);
-        tdeeResults();
     }
 
     public void tdeeResults() {
@@ -149,7 +148,6 @@ public class TdeeCalculator extends AppCompatActivity {
         }
         tdee *= BMR;
         tdee = Math.round(tdee);
-        System.out.println("TDEE: " + tdee);
     }
 
     public void openResults() {
@@ -157,6 +155,7 @@ public class TdeeCalculator extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("BMR", String.valueOf(BMR));
         bundle.putString("TDEE", String.valueOf(tdee));
+        bundle.putString("weightKgs", String.valueOf(weightKgs));
         intent.putExtras(bundle);
         startActivity(intent);
     }

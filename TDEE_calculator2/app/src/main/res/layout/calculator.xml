@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -15,7 +15,7 @@
         android:layout_marginTop="56dp"
         android:layout_marginEnd="295dp"
         android:layout_marginRight="295dp"
-        android:text="Gender"
+        android:text="@string/gender"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,25 +24,34 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="142dp"
-        android:layout_height="31dp"
+        android:layout_height="22dp"
         android:layout_marginStart="27dp"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="50dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toEndOf="@+id/txtGender"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/rdBtnMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male" />
+            android:text="@string/male" />
 
         <RadioButton
             android:id="@+id/rdBtnFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female" />
+            android:text="@string/female" />
+
+        <RadioButton
+            android:id="@+id/rdioCheck"
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="@string/radio"
+            tools:visibility="invisible" />
     </RadioGroup>
 
     <TextView
@@ -52,9 +61,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
-        android:text="Age"
+        android:text="@string/age"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/txtGender" />
 
     <EditText
         android:id="@+id/txtAge"
@@ -67,7 +76,8 @@
         android:inputType="number"
         android:maxLength="3"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView4"
@@ -76,7 +86,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="28dp"
-        android:text="Weight"
+        android:text="@string/weight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -90,9 +100,10 @@
         android:ems="10"
         android:inputType="number"
         android:maxLength="3"
-        android:hint="lbs"
+        android:hint="@string/lbs"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/txtAge" />
+        app:layout_constraintTop_toBottomOf="@+id/txtAge"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView5"
@@ -101,7 +112,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="80dp"
-        android:text="Activity"
+        android:text="@string/activity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -123,7 +134,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="51dp"
-        android:text="Body Fat"
+        android:text="@string/body_fat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -133,13 +144,14 @@
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
-        android:hint="Optional"
+        android:hint="@string/optional"
         android:inputType="number"
         android:maxLength="2"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/spnrActivityLevel" />
+        app:layout_constraintTop_toBottomOf="@+id/spnrActivityLevel"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnCalculate"
@@ -150,7 +162,7 @@
         android:layout_marginEnd="128dp"
         android:layout_marginRight="128dp"
         android:layout_marginBottom="198dp"
-        android:text="Calculate"
+        android:text="@string/calculate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -162,7 +174,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="30dp"
-        android:text="Height"
+        android:text="@string/height"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -174,10 +186,11 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="inches"
+        android:hint="@string/inches"
         android:inputType="number"
         android:maxLength="3"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/txtWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/txtWeight"
+        android:autofillHints="" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
