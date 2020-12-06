@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 "• Not only does our app show your caloric needs, we show you your macros as well\n" +
                 "• We include a GPS to see what stores are around your area also" +
                 "• If you want to know more about TDEE details or don't know what it is in general, click Know More!\n" +
-                "• If you know what about the details already, proceed to the calculator and again, thank you for using our app!");
+                "• If you know what about the details already, proceed to the calculator and again, thank you for using our app! \n\n" +
+                "•We are not doctors. Always consult a doctor when wanting to pursue anything diet and/or exercise related.");
     }
 
     public void openTdeeInfo() {

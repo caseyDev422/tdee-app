@@ -33,7 +33,7 @@
         <Button
             android:id="@+id/btnTdeeCalculator"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="254dp"
+            android:layout_width="214dp"
             android:layout_height="match_parent"
             android:text="TDEE calculator" />
 

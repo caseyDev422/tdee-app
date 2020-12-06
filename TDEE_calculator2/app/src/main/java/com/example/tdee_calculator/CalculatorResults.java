@@ -2,8 +2,9 @@ package com.example.tdee_calculator;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -20,6 +21,8 @@ public class CalculatorResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculator_results);
 
+
+
         TextView bmrText = findViewById(R.id.txtbmrResults);
         TextView tdeeText = findViewById(R.id.txttdeeResults);
         TextView textView = findViewById(R.id.txtOtheResults);
@@ -32,8 +35,8 @@ public class CalculatorResults extends AppCompatActivity {
         bmrText.setText("Your BMR is: " + bmr);
         tdeeText.setText("Your TDEE is: " + tdee);
         textView.setText("Now that you have your TDEE or calories to maintain your weight, below is adjustments" +
-                " for you to either gain weight or lose weight. \nWe recommend staying with these results to lose weight at" +
-                " a healthy pace or gain weight with minimal fat gain.");
+                " for you to either gain weight \nor lose weight. \n\nWe recommend staying with these results to lose weight at" +
+                " \na healthy pace or gain weight with minimal fat gain.");
         Switch switchWeight = findViewById(R.id.switchWeight);
 
         TextView txtDescription = findViewById(R.id.txtDescription);
@@ -54,7 +57,25 @@ public class CalculatorResults extends AppCompatActivity {
                 }
             }
         });
+
+        Button mapButton = (Button) findViewById(R.id.btnMap);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMap();
+            }
+        });
+
+        Button recommendBtn = (Button) findViewById(R.id.btnRecommend);
+        recommendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openRecommendations();
+            }
+        });
     }
+
+
 
     public void getLosingWeightMacros() {
         double TDEE = Double.parseDouble(tdee);
@@ -126,5 +147,15 @@ public class CalculatorResults extends AppCompatActivity {
         double carbMarcos = TDEE / 4; //whatever calories are left go to carbs
         TextView carbs = findViewById(R.id.txtCarbs);
         carbs.setText(String.valueOf(carbMarcos));
+    }
+
+    public void openMap() {
+        Intent intent = new Intent(this, Map.class);
+        startActivity(intent);
+    }
+
+    public void openRecommendations() {
+        Intent intent = new Intent(this, FoodRecommendations.class);
+        startActivity(intent);
     }
 }
